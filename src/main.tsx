@@ -40,17 +40,3 @@ root.render(
     </QueryClientProvider>
   </React.StrictMode>
 );
-
-// Enregistrement du service worker pour le PWA (optionnel)
-if ('serviceWorker' in navigator && import.meta.env.PROD) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/service-worker.js')
-      .then((registration) => {
-        console.log('ServiceWorker enregistré avec succès :', registration.scope);
-      })
-      .catch((error) => {
-        console.error("Échec de l'enregistrement du ServiceWorker :", error);
-      });
-  });
-}

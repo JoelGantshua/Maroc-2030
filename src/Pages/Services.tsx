@@ -81,6 +81,7 @@ const Services = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            whileHover={{ scale: 1.02 }}
             className="text-black"
           >
             <h1 className="text-5xl md:text-6xl font-bold mb-4">Nos Services Exceptionnels</h1>
@@ -150,13 +151,13 @@ const Services = () => {
           className="mt-24 bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 md:p-12 text-white overflow-hidden relative"
         >
           <div className="absolute inset-0 bg-[url('/assets/patterns/pattern.svg')] opacity-10"></div>
-          <div className="relative z-10 text-center max-w-4xl mx-auto">
+          <div className="px-8 py-10 bg-black gradient-to-r from-primary to-secondary mx-auto mt-10 text-primary font-medium rounded-lg hover:bg-gray-100 transition-colors">
             <h3 className="text-3xl md:text-4xl font-bold mb-4">Prêt à vivre une expérience inoubliable ?</h3>
             <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
               Notre équipe est disponible 24/7 pour personnaliser votre séjour selon vos envies.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-8 py-4 bg-white text-primary rounded-xl font-bold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
+              <button className="px-8 py-4 bg-black/30 text-primary rounded-xl font-bold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105">
                 Contactez-nous
               </button>
               <button className="px-8 py-4 border-2 border-white text-white rounded-xl font-bold hover:bg-white/10 transition-all duration-300 transform hover:scale-105">

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const slides = [
   {
@@ -38,6 +38,14 @@ const Hero = () => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Préchargement des images pour améliorer les performances
+  useEffect(() => {
+    slides.forEach((slide) => {
+      const img = new Image();
+      img.src = slide.image;
+    });
+  }, []);
+
   // Auto-advance slides
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -71,19 +79,63 @@ const Hero = () => {
 
   return (
     <section className="relative h-[90vh] overflow-hidden">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentSlide}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1 }}
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: slides[currentSlide] ? `url(${slides[currentSlide].image})` : 'none' }}
-        >
-          <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-        </motion.div>
-      </AnimatePresence>
+      {/* Images en arrière-plan qui défilent avec effet parallaxe */}
+      <div className="absolute inset-0">
+        {slides.map((slide, index) => (
+          <motion.div
+            key={slide.id}
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ 
+              backgroundImage: `url(${slide.image})`,
+              backgroundPosition: 'center center',
+              backgroundSize: 'cover',
+              backgroundAttachment: 'fixed'
+            }}
+            initial={{ opacity: 0, scale: 1.1, filter: 'blur(5px)' }}
+            animate={{ 
+              opacity: index === currentSlide ? 1 : 0,
+              scale: index === currentSlide ? 1 : 1.05,
+              y: index === currentSlide ? 0 : 30,
+              filter: index === currentSlide ? 'blur(0px)' : 'blur(2px)'
+            }}
+            transition={{ 
+              duration: 2.5,
+              ease: [0.25, 0.46, 0.45, 0.94],
+              opacity: { duration: 2 },
+              scale: { duration: 2.5 },
+              filter: { duration: 1.5 }
+            }}
+            whileHover={{ scale: 1.01 }}
+          />
+        ))}
+        {/* Overlay avec dégradé pour améliorer la lisibilité */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/60"></div>
+        
+        {/* Effet de particules flottantes */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-white/30 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -100, 0],
+                opacity: [0, 1, 0],
+                scale: [0, 1, 0],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+                ease: "easeInOut"
+              }}
+            />
+          ))}
+        </div>
+      </div>
 
       {/* Navigation buttons */}
       <button 
@@ -91,7 +143,7 @@ const Hero = () => {
           setIsAutoPlaying(false);
           prevSlide();
         }}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-black/30 text-white hover:bg-primary transition-colors"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/90 text-gray-800 hover:bg-white hover:text-primary transition-all duration-300 shadow-lg hover:shadow-xl"
         aria-label="Précédent"
       >
         <FiChevronLeft size={24} />
@@ -102,7 +154,7 @@ const Hero = () => {
           setIsAutoPlaying(false);
           nextSlide();
         }}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-black/30 text-white hover:bg-primary transition-colors"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/90 text-gray-800 hover:bg-white hover:text-primary transition-all duration-300 shadow-lg hover:shadow-xl"
         aria-label="Suivant"
       >
         <FiChevronRight size={24} />
@@ -117,7 +169,7 @@ const Hero = () => {
               setIsAutoPlaying(false);
               goToSlide(index);
             }}
-            className={`w-3 h-3 rounded-full transition-all ${currentSlide === index ? 'bg-primary w-8' : 'bg-white/50 hover:bg-white/80'}`}
+            className={`w-3 h-3 rounded-full transition-all duration-300 shadow-md ${currentSlide === index ? 'bg-white w-8 shadow-lg' : 'bg-white/60 hover:bg-white/90'}`}
             aria-label={`Aller au slide ${index + 1}`}
           />
         ))}
@@ -152,11 +204,11 @@ const Hero = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Rechercher un service, une destination..."
-                className="flex-grow px-6 py-4 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="flex-grow px-6 py-4 rounded-full text-gray-800 bg-white/95 focus:outline-none focus:ring-2 focus:ring-white focus:bg-white border-2 border-white/50 shadow-lg"
               />
               <button
                 type="submit"
-                className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-full transition-colors whitespace-nowrap"
+                className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap"
               >
                 Rechercher
               </button>
@@ -171,7 +223,7 @@ const Hero = () => {
           >
             <a 
               href="#services" 
-              className="inline-block bg-white text-primary font-semibold px-8 py-3 rounded-full hover:bg-gray-100 transition-colors shadow-lg"
+              className="inline-block bg-white text-primary font-semibold px-8 py-3 rounded-full hover:bg-gray-100 hover:text-primary/80 transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-white/20"
             >
               {slides[currentSlide] ? slides[currentSlide].cta : ''}
             </a>

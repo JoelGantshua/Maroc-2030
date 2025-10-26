@@ -56,7 +56,7 @@ const Appartements = () => {
         price: 650,
         address: 'Quartier Sfiha',
         city: 'Al Hoceima',
-        images: ['/assets/APT/ALHOCEIMA/APPART2/IM1.jpg', '/assets/APT/ALHOCEIMA/APPART2/IM2.jpg', '/assets/APT/ALHOCEIMA/APPART2/IM3.jpg', '/assets/APT/ALHOCEIMA/APPART2/IM4.jpg', '/assets/APT/ALHOCEIMA/APPART2/IM5.jpg']
+        images: ['/assets/APT/ALHOCEIMA/APPART2/Img1.jpg', '/assets/APT/ALHOCEIMA/APPART2/Img2.jpg', '/assets/APT/ALHOCEIMA/APPART2/Img3.jpg', '/assets/APT/ALHOCEIMA/APPART2/Img4.jpg', '/assets/APT/ALHOCEIMA/APPART2/Img5.jpg']
       }
     ],
     'Casablanca': [
@@ -67,7 +67,7 @@ const Appartements = () => {
         price: 1200,
         address: 'Avenue des FAR',
         city: 'Casablanca',
-        images: ['/assets/APT/casablanca/1.jpg', '/assets/APT/casablanca/2.jpg']
+        images: ['/assets/APT/CASABLANCA/APPART1/ca1.jpg', '/assets/APT/CASABLANCA/APPART1/ca2.jpg','/assets/APT/CASABLANCA/APPART1/ca3.jpg']
       },
       {
         id: 'casa2',
@@ -76,7 +76,7 @@ const Appartements = () => {
         price: 950,
         address: 'Quartier Maarif',
         city: 'Casablanca',
-        images: ['/assets/APT/casablanca/3.jpg', '/assets/APT/casablanca/4.jpg']
+        images: ['/assets/APT/CASABLANCA/APPART2/cas1.jpg', '/assets/APT/CASABLANCA/APPART2/cas2.jpg','/assets/APT/CASABLANCA/APPART2/cas3.jpg',]
       },
       {
         id: 'casa3',
@@ -85,7 +85,7 @@ const Appartements = () => {
         price: 1500,
         address: 'Corniche d\'Ain Diab',
         city: 'Casablanca',
-        images: ['/assets/APT/casablanca/5.jpg', '/assets/APT/casablanca/6.jpg']
+        images: ['/assets/APT/CASABLANCA/APPART3/casa.jpg', '/assets/APT/CASABLANCA/APPART3/casa.jpg']
       }
     ],
     'Fès': [
@@ -96,7 +96,7 @@ const Appartements = () => {
         price: 900,
         address: 'Médina de Fès',
         city: 'Fès',
-        images: ['/assets/APT/fes/1.jpg', '/assets/APT/fes/2.jpg']
+        images: ['/assets/APT/FES/apt1/1.jpg', '/assets/APT/FES/apt1/2.jpg','/assets/APT/FES/apt1/3.jpg', '/assets/APT/FES/apt1/4.jpg']
       },
       {
         id: 'fes2',
@@ -105,7 +105,7 @@ const Appartements = () => {
         price: 750,
         address: 'Quartier Fès Jdid',
         city: 'Fès',
-        images: ['/assets/APT/fes/3.jpg', '/assets/APT/fes/4.jpg']
+        images: ['/assets//APT/FES/apt2/6.jpg', '/assets/APT/FES/apt2/7.jpg', '/assets/APT/FES/apt2/8.jpg', '/assets/APT/FES/apt2/9.jpg','/assets/APT/FES/apt2/10.jpg']
       }
     ],
     'Marrakech': [
@@ -116,7 +116,7 @@ const Appartements = () => {
         price: 1000,
         address: 'Médina',
         city: 'Marrakech',
-        images: ['/assets/APT/marrakech/1.jpg', '/assets/APT/marrakech/2.jpg']
+        images: ['/assets/APT/MARRAKECH/apt1/1.jpg', '/assets/APT/MARRAKECH/apt1/2.jpg','/assets/APT/MARRAKECH/apt1/3.jpg',]
       },
       {
         id: 'mar2',
@@ -125,7 +125,7 @@ const Appartements = () => {
         price: 850,
         address: 'Quartier Guéliz',
         city: 'Marrakech',
-        images: ['/assets/APT/marrakech/3.jpg', '/assets/APT/marrakech/4.jpg']
+        images: ['/assets/APT/MARRAKECH/apt2/4.jpg', '/assets/APT/MARRAKECH/apt2/5.jpg','/assets/APT/MARRAKECH/apt2/6.jpg', '/assets/APT/MARRAKECH/apt2/7.jpg']
       }
     ],
     'Meknès': [
@@ -136,7 +136,7 @@ const Appartements = () => {
         price: 700,
         address: 'Médina de Meknès',
         city: 'Meknès',
-        images: ['/assets/APT/meknes/1.jpg', '/assets/APT/meknes/2.jpg']
+        images: ['/assets/APT/Meknès/apt1/1.jpg', '/assets/APT/Meknès/apt1/2.jpg','/assets/APT/Meknès/apt1/3.jpg', '/assets/APT/Meknès/apt1/4.jpg']
       },
       {
         id: 'mek2',
@@ -145,7 +145,7 @@ const Appartements = () => {
         price: 650,
         address: 'Quartier Hamria',
         city: 'Meknès',
-        images: ['/assets/APT/meknes/3.jpg', '/assets/APT/meknes/4.jpg']
+        images: ['/assets/APT/Meknès/apt2/1.jpg', '/assets/APT/Meknès/apt2/2.jpg','/assets/APT/Meknès/apt2/3.jpg']
       }
     ],
     'Ifrane': [
@@ -156,7 +156,7 @@ const Appartements = () => {
         price: 1100,
         address: 'Station de Michlifen',
         city: 'Ifrane',
-        images: ['/assets/APT/ifrane/1.jpg', '/assets/APT/ifrane/2.jpg']
+        images: ['/assets/APT/IFRANE/apt1/1.jpg', '/assets/APT/IFRANE/apt1/2.jpg','/assets/APT/IFRANE/apt1/3.jpg']
       },
       {
         id: 'ifr2',
@@ -165,7 +165,7 @@ const Appartements = () => {
         price: 950,
         address: 'Quartier Résidentiel',
         city: 'Ifrane',
-        images: ['/assets/APT/ifrane/3.jpg', '/assets/APT/ifrane/4.jpg']
+        images: ['/assets/APT/IFRANE/apt2/1.jpg', '/assets/APT/IFRANE/apt2/2.jpg','/assets/APT/IFRANE/apt2/3.jpg']
       },
       {
         id: 'ifr3',
@@ -174,7 +174,7 @@ const Appartements = () => {
         price: 1300,
         address: 'Quartier des Cèdres',
         city: 'Ifrane',
-        images: ['/assets/APT/ifrane/5.jpg', '/assets/APT/ifrane/6.jpg']
+        images: ['/assets/APT/IFRANE/apt3/1.jpg', '/assets/APT/IFRANE/apt3/2.jpg']
       }
     ],
     'Nador': [
@@ -185,7 +185,7 @@ const Appartements = () => {
         price: 600,
         address: 'Quartier Lagouira',
         city: 'Nador',
-        images: ['/assets/APT/nador/1.jpg', '/assets/APT/nador/2.jpg']
+        images: ['/assets/APT/NADOR/apt1/1.jpg', '/assets/APT/NADOR/apt1/2.jpg','/assets/APT/NADOR/apt1/3.jpg','/assets/APT/NADOR/apt1/4.jpg','/assets/APT/NADOR/apt1/5.jpg']
       },
       {
         id: 'nad2',
@@ -194,7 +194,7 @@ const Appartements = () => {
         price: 550,
         address: 'Quartier Bouarg',
         city: 'Nador',
-        images: ['/assets/APT/nador/3.jpg', '/assets/APT/nador/4.jpg']
+        images: ['/assets/APT/NADOR/apt2/6.jpg', '/assets/APT/NADOR/apt2/7.jpg','/assets/APT/NADOR/apt2/8.jpg','/assets/APT/NADOR/apt2/9.jpg','/assets/APT/NADOR/apt2/10.jpg','/assets/APT/NADOR/apt2/11.jpg']
       }
     ],
     'Oujda': [
@@ -205,7 +205,7 @@ const Appartements = () => {
         price: 650,
         address: 'Boulevard Mohammed V',
         city: 'Oujda',
-        images: ['/assets/APT/oujda/1.jpg', '/assets/APT/oujda/2.jpg']
+        images: ['/assets/APT/OUJDA/apt2/6.jpg', '/assets/APT/OUJDA/apt2/5.jpg','/assets/APT/OUJDA/apt2/7.jpg','/assets/APT/OUJDA/apt2/8.jpg']
       },
       {
         id: 'ouj2',
@@ -214,7 +214,7 @@ const Appartements = () => {
         price: 600,
         address: 'Quartier Al Qods',
         city: 'Oujda',
-        images: ['/assets/APT/oujda/3.jpg', '/assets/APT/oujda/4.jpg']
+        images: ['/assets/APT/OUJDA/apt1/1.jpg', '/assets/APT/OUJDA/apt1/2.jpg','/assets/APT/OUJDA/apt1/3.jpg','/assets/APT/OUJDA/apt1/4.jpg']
       }
     ],
     'Rabat': [
@@ -225,7 +225,7 @@ const Appartements = () => {
         price: 1100,
         address: 'Quartier Agdal',
         city: 'Rabat',
-        images: ['/assets/APT/rabat/1.jpg', '/assets/APT/rabat/2.jpg']
+        images: ['/assets/APT/RABAT/apt1/1.jpg', '/assets/APT/RABAT/apt1/2.jpg']
       },
       {
         id: 'rab2',
@@ -234,7 +234,7 @@ const Appartements = () => {
         price: 950,
         address: 'Quartier Hay Riad',
         city: 'Rabat',
-        images: ['/assets/APT/rabat/3.jpg', '/assets/APT/rabat/4.jpg']
+        images: ['/assets/APT/RABAT/apt2/3.jpg', '/assets/APT/RABAT/apt2/4.jpg','/assets/APT/RABAT/apt2/5.jpg','/assets/APT/RABAT/apt2/6.jpg']
       }
     ],
     'Tanger': [
@@ -245,7 +245,7 @@ const Appartements = () => {
         price: 1000,
         address: 'Quartier Malabata',
         city: 'Tanger',
-        images: ['/assets/APT/tanger/1.jpg', '/assets/APT/tanger/2.jpg']
+        images: ['/assets/APT/TANGER/apt1/1.jpg', '/assets/APT/TANGER/apt1/2.jpg','/assets/APT/TANGER/apt1/3.jpg']
       },
       {
         id: 'tan2',
@@ -254,7 +254,7 @@ const Appartements = () => {
         price: 850,
         address: 'Boulevard Mohammed VI',
         city: 'Tanger',
-        images: ['/assets/APT/tanger/3.jpg', '/assets/APT/tanger/4.jpg']
+        images: ['/assets/APT/TANGER/apt2/4.jpg', '/assets/APT/TANGER/apt2/5.jpg','/assets/APT/TANGER/apt2/6.jpg','/assets/APT/TANGER/apt2/7.jpg']
       }
     ],
     'Tétouan': [
@@ -265,7 +265,7 @@ const Appartements = () => {
         price: 750,
         address: 'Quartier M\'Sallah',
         city: 'Tétouan',
-        images: ['/assets/APT/tetouan/1.jpg', '/assets/APT/tetouan/2.jpg']
+        images: ['/assets/APT/TETOUAN/apt1/1.jpg', '/assets/APT/TETOUAN/apt1/2.jpg','/assets/APT/TETOUAN/apt1/3.jpg', '/assets/APT/TETOUAN/apt1/4.jpg','/assets/APT/TETOUAN/apt1/5.jpg']
       },
       {
         id: 'tet2',
@@ -274,7 +274,7 @@ const Appartements = () => {
         price: 700,
         address: 'Quartier Marina Smir',
         city: 'Tétouan',
-        images: ['/assets/APT/tetouan/3.jpg', '/assets/APT/tetouan/4.jpg']
+        images: ['/assets/APT/TETOUAN/apt2/8.jpg', '/assets/APT/TETOUAN/apt2/7.jpg','/assets/APT/TETOUAN/apt2/6.jpg','/assets/APT/TETOUAN/apt2/9.jpg']
       }
     ],
     'Chefchaouen': [
@@ -285,7 +285,7 @@ const Appartements = () => {
         price: 900,
         address: 'Médina de Chefchaouen',
         city: 'Chefchaouen',
-        images: ['/assets/APT/chefchaouen/1.jpg', '/assets/APT/chefchaouen/2.jpg']
+        images: ['/assets/APT/chef/APPAR1/.jpg', '/assets/chef/APPAR1/ch1.jpg','/assets/APT/chef/APPAR1/ch3.jpg','/assets/APT/chef/APPAR1/ch4.jpg']
       },
       {
         id: 'chef2',
@@ -294,7 +294,7 @@ const Appartements = () => {
         price: 800,
         address: 'Quartier Ras El Maa',
         city: 'Chefchaouen',
-        images: ['/assets/APT/chefchaouen/3.jpg', '/assets/APT/chefchaouen/4.jpg']
+        images: ['/assets/APT/chef/APPART2/ch1.jpg', '/assets/APT/chef/APPART2/ch.jpg','/assets/APT/chef/APPART2/ch2.jpg']
       }
     ],
     'Essaouira': [
@@ -305,7 +305,7 @@ const Appartements = () => {
         price: 950,
         address: 'Médina d\'Essaouira',
         city: 'Essaouira',
-        images: ['/assets/APT/essaouira/1.jpg', '/assets/APT/essaouira/2.jpg']
+        images: ['/assets/APT/Essaouira/apt1/6.jpg', '/assets/APT/Essaouira/apt1/2.jpg','/assets/APT/Essaouira/apt1/3.jpg', '/assets/APT/Essaouira/apt1/4.jpg','/assets/APT/Essaouira/apt1/5.jpg','/assets/APT/Essaouira/apt1/1.jpg']
       },
       {
         id: 'ess2',
@@ -314,7 +314,7 @@ const Appartements = () => {
         price: 850,
         address: 'Quartier du Port',
         city: 'Essaouira',
-        images: ['/assets/APT/essaouira/3.jpg', '/assets/APT/essaouira/4.jpg']
+        images: ['/assets/APT/Essaouira/apt2/7.jpg', '/assets/APT/Essaouira/apt2/8.jpg','/assets/APT/Essaouira/apt2/9.jpg','/assets/APT/Essaouira/apt2/10.jpg','/assets/APT/Essaouira/apt2/11.jpg']
       }
     ]
   };

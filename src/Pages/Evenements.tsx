@@ -108,13 +108,13 @@ const Evenements = () => {
         </div>
 
         {/* Newsletter Section */}
-        <div className="mt-24 bg-gradient-to-r from-primary to-primary/90 rounded-2xl p-8 md:p-12 text-white">
+        <div className="px-15 py-5 bg-black/30 text-primary font-medium rounded-lg hover:bg-gray-100 transition-colors mx-auto mt-10">
           <div className="max-w-4xl mx-auto text-center">
             <h3 className="text-2xl md:text-3xl font-bold mb-4">Ne manquez aucun événement</h3>
-            <p className="text-white/90 mb-8 max-w-2xl mx-auto">
+            <p className="text-black/90 mb-8 max-w-2xl mx-auto">
               Inscrivez-vous à notre newsletter pour recevoir les dernières actualités sur les événements à venir au Maroc.
             </p>
-            <div className="flex flex-col md:flex-row gap-4 max-w-xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-5 max-w-xl mx-auto">
               <input 
                 type="email" 
                 placeholder="Votre adresse email" 

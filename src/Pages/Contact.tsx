@@ -167,7 +167,7 @@ const Contact = () => {
                 <div className="bg-white p-1 rounded-xl shadow-lg overflow-hidden">
                   <div className="aspect-w-16 aspect-h-9 w-full h-64 md:h-80">
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3399.184133645126!2d-7.987844424044264!3d31.63060004295479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xdafee8d9b0b6b1b%3A0x1e6c6b3b3b3b3b3b3!2sMarrakech%2C%20Morocco!5e0!3m2!1sen!2sma!4v1620000000000!5m2!1sen!2sma"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105994.7791205954!2d-5.620421386965054!3d33.88097757686905!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xda044d23bfc49d1%3A0xfbbf80a99e4cde18!2zTWVrbsOocw!5e0!3m2!1sfr!2sma!4v1761441304461!5m2!1sfr!2sma"
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}

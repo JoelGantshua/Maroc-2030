@@ -77,7 +77,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center p-0">
               <h1 className="text-primary m-0 text-xl font-bold" style={{ fontSize: '1.6rem' }}>
-                <i className="fa fa-map-marker-alt mr-2"></i>2030Maroc
+                <i className="fa fa-map-marker-alt mr-2"></i>Maroc2030
               </h1>
             </Link>
           </div>

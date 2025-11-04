@@ -1,237 +1,635 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import ServiceCard from '../../components/ServiceCard';
-
-// No need for dynamic import with Vite
 import SearchBar from '../../components/SearchBar';
+import ServiceCard from '@/components/ServiceCard';
 
 interface Voyage {
   id: string;
   title: string;
   description: string;
-  image: string;
+  images: string[];
   price: number;
   rating: number;
   duration: string;
   tags: string[];
+  city: string;
 }
 
-const Tourisme = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  
-  // Données des voyages
-  const [voyages] = useState<Voyage[]>([
-    {
-      id: '1',
-      title: 'Désert de Merzouga',
-      description: 'Aventure inoubliable au cœur des dunes du Sahara avec nuit en bivouac sous les étoiles.',
-      image: '/assets/tourisme/merzouga.jpg',
-      price: 1200,
-      rating: 4.8,
-      duration: '3 jours / 2 nuits',
-      tags: ['aventure', 'désert', 'randonnée']
-    },
-    {
-      id: '2',
-      title: 'Chefchaouen',
-      description: 'Découverte de la perle bleue nichée dans les montagnes du Rif, célèbre pour ses ruelles bleues et son ambiance paisible.',
-      image: '/assets/tourisme/chefchaouen.jpg',
-      price: 850,
-      rating: 4.7,
-      duration: '2 jours / 1 nuit',
-      tags: ['culture', 'montagne', 'photographie']
-    },
-    {
-      id: '3',
-      title: 'Essaouira',
-      description: 'Détente dans cette ville côtière connue pour ses remparts portugais, ses plages et sa médina classée au patrimoine de l\'UNESCO.',
-      image: '/assets/tourisme/essaouira.jpg',
-      price: 950,
-      rating: 4.6,
-      duration: '3 jours / 2 nuits',
-      tags: ['plage', 'culture', 'détente']
-    },
-    {
-      id: '4',
-      title: 'Vallée du Dadès',
-      description: 'Exploration des paysages spectaculaires des gorges du Dadès et de la vallée des Roses.',
-      image: '/assets/tourisme/dades.jpg',
-      price: 1100,
-      rating: 4.9,
-      duration: '4 jours / 3 nuits',
-      tags: ['aventure', 'nature', 'randonnée']
-    },
-    {
-      id: '5',
-      title: 'Fès Médina',
-      description: 'Immersion dans la plus grande médina du monde arabe, découverte de l\'artisanat traditionnel et des médersas historiques.',
-      image: '/assets/tourisme/fes.jpg',
-      price: 780,
-      rating: 4.5,
-      duration: '2 jours / 1 nuit',
-      tags: ['culture', 'histoire', 'artisanat']
-    },
-    {
-      id: '6',
-      title: 'Atlas Film Studio',
-      description: 'Visite des studios de cinéma en plein désert où de nombreux films hollywoodiens ont été tournés.',
-      image: '/assets/tourisme/atlas-studio.jpg',
-      price: 650,
-      rating: 4.3,
-      duration: '1 jour',
-      tags: ['cinéma', 'désert', 'culture']
-    },
-  ]);
+interface Ville {
+  id: string;
+  name: string;
+  image: string;
+  description: string;
+  voyages: Voyage[];
+}
 
-  // Simulation de chargement
+const ImageSlider = ({ images }: { images: string[] }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Filtrage des voyages
-  const filteredVoyages = voyages.filter(voyage => {
-    const matchesSearch = voyage.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                         voyage.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesTag = !selectedTag || voyage.tags.includes(selectedTag);
-    return matchesSearch && matchesTag;
-  });
-
-  // Récupération de tous les tags uniques
-  const allTags = Array.from(new Set(voyages.flatMap(voyage => voyage.tags)));
-
-  // Animation des cartes
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
-      </div>
-    );
-  }
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [images.length]);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <title>Tourisme au Maroc | Découvrez nos circuits exclusifs</title>
-      <meta name="description" content="Découvrez les plus beaux sites touristiques du Maroc avec nos circuits organisés. Des déserts aux montagnes en passant par les villes impériales." />
-      
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Découvrez le Maroc</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Explorez la richesse culturelle et la beauté naturelle du Maroc à travers nos circuits touristiques exceptionnels.
-          </p>
-        </motion.div>
+    <div className="relative h-48 w-full overflow-hidden">
+      {images.map((image, index) => (
+        <img
+          key={index}
+          src={image}
+          alt={`Slide ${index + 1}`}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${index === currentIndex ? 'opacity-100' : 'opacity-0'}`}
+          loading="lazy"
+        />
+      ))}
+      <div className="absolute bottom-2 left-0 right-0 flex justify-center space-x-2">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`w-2 h-2 rounded-full ${index === currentIndex ? 'bg-white' : 'bg-white/50'}`}
+            aria-label={`Aller à l'image ${index + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
-        {/* Barre de recherche et filtres */}
-        <div className="mb-8">
-          <div className="mb-6">
-            <SearchBar 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Rechercher une destination..."
-            />
-          </div>
-          
-          <div className="flex flex-wrap gap-2 justify-center mb-6">
-            <button
-              onClick={() => setSelectedTag(null)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                !selectedTag 
-                  ? 'bg-primary-600 text-white' 
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              Tous
-            </button>
-            {allTags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => setSelectedTag(tag === selectedTag ? null : tag)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  tag === selectedTag
-                    ? 'bg-primary-600 text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-100'
-                }`}
-              >
-                {tag.charAt(0).toUpperCase() + tag.slice(1)}
-              </button>
-            ))}
-          </div>
+const Tourisme = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  
+  // Données des villes et leurs voyages associés
+  const [villes, setVilles] = useState<Ville[]>([
+    {
+      id: '²',
+      name: 'Marrakech',
+      image: 'public/voyages/vyg/marack/0.jpg',
+      description: 'La ville ocre, joyau impérial au pied des montagnes de l\'Atlas',
+      voyages: [
+        {
+          id: '1',
+          title: 'Découverte de Marrakech',
+          description: 'Visite des jardins Majorelle, de la place Jemaa el-Fna et des souks animés',
+          images: [
+            '/voyages/vyg/marack/1.jpg',
+            '/voyages/vyg/marack/2.jpg',
+            '/voyages/vyg/marack/3.jpg'
+          ],
+          price: 800,
+          rating: 4.7,
+          duration: '2 jours / 1 nuit',
+          tags: ['culture', 'histoire', 'marché'],
+          city: 'marrakech'
+        },
+        {
+          id: '1-2',
+          title: 'Séjour luxe à la Palmeraie',
+          description: 'Séjour dans un riad de luxe avec spa et excursions privées',
+          images: [
+            '/voyages/vyg/marack/4.jpg',
+            '/voyages/vyg/marack/5.jpg',
+            '/voyages/vyg/marack/6.jpg'
+          ],
+          price: 2500,
+          rating: 4.9,
+          duration: '4 jours / 3 nuits',
+          tags: ['luxe', 'détente', 'bien-être'],
+          city: 'marrakech'
+        },
+        {
+          id: '1-3',
+          title: 'Atlas et Vallée de l\'Ourika',
+          description: 'Randonnée dans les montagnes de l\'Atlas et visite des villages berbères',
+          images: [
+            '/voyages/vyg/marack/7.jpg',
+            '/voyages/vyg/marack/8.jpg',
+            '/voyages/vyg/marack/9.jpg'
+            
+          ],
+          price: 950,
+          rating: 4.6,
+          duration: '1 jour',
+          tags: ['randonnée', 'nature', 'aventure'],
+          city: 'marrakech'
+        }
+        
+      ]
+    },
+    {
+      id: 'fes',
+      name: 'Fès',
+      image: '/voyages/vyg/Fes/IM.jpeg',
+      description: 'La capitale spirituelle et culturelle du Maroc',
+      voyages: [
+        {
+          id: '3',
+          title: 'Médina de Fès',
+          description: 'Exploration de la plus grande médina du monde classée au patrimoine de l\'UNESCO',
+          images: [
+            '/voyages/vyg/Fes/1.jpeg',
+            '/voyages/vyg/Fes/2.jpeg',
+            '/voyages/vyg/Fes/4.jpg'
+          ],
+          price: 700,
+          rating: 4.6,
+          duration: '2 jours / 1 nuit',
+          tags: ['histoire', 'culture', 'médina'],
+          city: 'fes'
+        },
+        {
+          id: '3-2',
+          title: 'Fès Impériale',
+          description: 'Découverte des palais royaux et des médersas historiques',
+          images: [
+            '/voyages/vyg/Fes/3.webp',
+            '/voyages/vyg/Fes/5.jpg',
+            '/voyages/vyg/Fes/7d.jpg'
+          ],
+          price: 850,
+          rating: 4.5,
+          duration: '2 jours / 1 nuit',
+          tags: ['histoire', 'architecture', 'culture'],
+          city: 'fes'
+        },
+        {
+          id: '3-3',
+          title: 'Artisanat de Fès',
+          description: 'Visite des ateliers d\'artisanat et cours de cuisine marocaine',
+          images: [
+            '/voyages/vyg/Fes/11.jpg',
+            '/voyages/vyg/Fes/13.jpg',
+            '/voyages/vyg/Fes/fes.webp'
+          ],
+          price: 650,
+          rating: 4.7,
+          duration: '1 jour',
+          tags: ['artisanat', 'cuisine', 'expérience locale'],
+          city: 'fes'
+        }
+      ]
+    },
+    {
+      id: 'chefchaouen',
+      name: 'Chefchaouen',
+      image: '/assets/tourisme/chefchaouen.jpg',
+      description: 'La ville bleue nichée dans les montagnes du Rif',
+      voyages: [
+        {
+          id: '5',
+          title: 'Découverte de la Perle Bleue',
+          description: 'Balade dans les ruelles bleues et visite des points de vue panoramiques',
+          images: [
+            '/voyages/vyg/Villebeu/1.jpg',
+            '/voyages/vyg/Villebeu/2.jpg',
+            '/voyages/vyg/Villebeu/3.jpg'
+          ],
+          price: 750,
+          rating: 4.8,
+          duration: '2 jours / 1 nuit',
+          tags: ['photographie', 'culture', 'nature'],
+          city: 'chefchaouen'
+        },
+        {
+          id: '5-2',
+          title: 'Randonnée dans le Parc de Talassemtane',
+          description: 'Randonnée à travers les forêts de cèdres et les cascades',
+          images: [
+            '/voyages/vyg/Villebeu/4.webp',
+            '/voyages/vyg/Villebeu/5.jpeg',
+            '/voyages/vyg/Villebeu/6.jpeg'
+          ],
+          price: 900,
+          rating: 4.9,
+          duration: '3 jours / 2 nuits',
+          tags: ['randonnée', 'nature', 'aventure'],
+          city: 'chefchaouen'
+        },
+        {
+          id: '5-3',
+          title: 'Expérience artisanale à Chefchaouen',
+          description: 'Ateliers de tissage et de teinture traditionnelle',
+          images: [
+            '/voyages/vyg/Villebeu/7.jpeg',
+            '/voyages/vyg/Villebeu/8.jpeg',
+            '/voyages/vyg/Villebeu/9.jpeg'
+          ],
+          price: 600,
+          rating: 4.6,
+          duration: '1 jour',
+          tags: ['artisanat', 'culture', 'expérience locale'],
+          city: 'chefchaouen'
+        }
+      ]
+    },
+    {
+      id: 'essaouira',
+      name: 'Essaouira',
+      image: '/voyages/vyg/es/1.jpg',
+      description: 'Cité balnéaire au charme bohème et à l\'architecture portugaise',
+      voyages: [
+        {
+          id: '6',
+          title: 'Week-end à Essaouira',
+          description: 'Découverte de la médina et des plages de sable fin',
+          images: [
+            '/voyages/vyg/es/1.jpg',
+            '/voyages/vyg/marack/T15.jpeg',
+            '/voyages/vyg/marack/T13.jpeg'
+          ],
+          price: 950,
+          rating: 4.7,
+          duration: '2 jours / 1 nuit',
+          tags: ['plage', 'détente', 'culture'],
+          city: 'essaouira'
+        },
+        {
+          id: '6-2',
+          title: 'Sports nautiques à Essaouira',
+          description: 'Kitesurf, planche à voile et autres activités nautiques',
+          images: [
+            '/voyages/vyg/es/2.jpg',
+            '/voyages/vyg/marack/mrkc.jpg',
+            '/voyages/vyg/marack/T11.jpeg'
+          ],
+          price: 1100,
+          rating: 4.8,
+          duration: '3 jours / 2 nuits',
+          tags: ['sports nautiques', 'aventure', 'plage'],
+          city: 'essaouira'
+        },
+        {
+          id: '6-3',
+          title: 'Gastronomie d\'Essaouira',
+          description: 'Dégustation de fruits de mer frais et cours de cuisine',
+          images: [
+            '/voyages/vyg/es/3.jpg',
+            '/voyages/vyg/marack/marrakech.jpeg',
+            '/voyages/vyg/marack/T12.jpeg'
+          ],
+          price: 850,
+          rating: 4.9,
+          duration: '1 jour',
+          tags: ['gastronomie', 'cuisine', 'expérience locale'],
+          city: 'essaouira'
+        }
+      ]
+    },
+    {
+      id: 'ouarzazate',
+      name: 'Ouarzazate',
+      image: '/voyages/vyg/marack/T8.jpg',
+      description: 'La porte du désert et la capitale du cinéma marocain',
+      voyages: [
+        {
+          id: '7',
+          title: 'Vallée du Drâa et Kasbahs',
+          description: 'Circuit à travers les palmeraies et les anciennes forteresses',
+          images: [
+            '/voyages/vyg/ouar/1.jpg',
+            '/voyages/vyg/marack/T14.jpeg',
+            '/voyages/vyg/ouar/5.jpg'
+          ],
+          price: 1200,
+          rating: 4.7,
+          duration: '3 jours / 2 nuits',
+          tags: ['désert', 'histoire', 'aventure'],
+          city: 'ouarzazate'
+        },
+        {
+          id: '7-2',
+          title: 'Studios de cinéma et Aït Ben Haddou',
+          description: 'Visite des studios Atlas et du célèbre village fortifié',
+          images: [
+            '/voyages/vyg/ouar/2.jpg',
+            '/voyages/vyg/marack/mrkc.jpg',
+            '/voyages/vyg/ouar/6.jpg'
+          ],
+          price: 850,
+          rating: 4.8,
+          duration: '1 jour',
+          tags: ['cinéma', 'patrimoine', 'culture'],
+          city: 'ouarzazate'
+        },
+        {
+          id: '7-3',
+          title: 'Dunes de Chegaga',
+          description: 'Expédition dans le désert avec nuit en bivouac',
+          images: [
+            '/voyages/vyg/ouar/3.jpg',
+            '/voyages/vyg/ouar/4.jpg',
+            '/voyages/vyg/marack/T8.jpeg'
+          ],
+          price: 1500,
+          rating: 4.9,
+          duration: '2 jours / 1 nuit',
+          tags: ['désert', 'aventure', 'randonnée'],
+          city: 'ouarzazate'
+        }
+      ]
+    },
+    {
+      id: 'tanger',
+      name: 'Tanger',
+      image: '/assets/tourisme/tanger.jpg',
+      description: 'Ville mythique à la croisée de la Méditerranée et de l\'Atlantique',
+      voyages: [
+        {
+          id: '8',
+          title: 'Tanger et Cap Spartel',
+          description: 'Découverte de la ville et du point de rencontre des deux mers',
+          images: [
+            '/voyages/vyg/Tg/1.jpg',
+            '/voyages/vyg/Tg/2.webp',
+            '/voyages/vyg/Tg/3.jpg'
+          ],
+          price: 900,
+          rating: 4.6,
+          duration: '2 jours / 1 nuit',
+          tags: ['culture', 'histoire', 'mer'],
+          city: 'tanger'
+        },
+        {
+          id: '8-2',
+          title: 'Tanger la cosmopolite',
+          description: 'Sur les pas des écrivains et artistes internationaux',
+          images: [
+            '/voyages/vyg/Tg/4.jpg',
+            '/voyages/vyg/Tg/5.jpg',
+            '/voyages/vyg/Tg/6.jpg'
+          ],
+          price: 1100,
+          rating: 4.5,
+          duration: '2 jours / 1 nuit',
+          tags: ['littérature', 'art', 'histoire'],
+          city: 'tanger'
+        },
+        {
+          id: '8-3',
+          title: 'Détente à Tanger',
+          description: 'Séjour balnéaire dans les plus beaux hôtels de la ville',
+          images: [
+            '/voyages/vyg/Tg/7.png',
+            '/voyages/vyg/Tg/8.jpg',
+            '/voyages/vyg/Tg/9.jpg'
+          ],
+          price: 2000,
+          rating: 4.8,
+          duration: '3 jours / 2 nuits',
+          tags: ['luxe', 'détente', 'plage'],
+          city: 'tanger'
+        }
+      ]
+    },
+    {
+      id: 'merzouga',
+      name: 'Merzouga',
+      image: '/assets/tourisme/merzouga.jpg',
+      description: 'Porte du désert du Sahara marocain',
+      voyages: [
+        {
+          id: '2',
+          title: 'Désert de Merzouga',
+          description: 'Aventure inoubliable au cœur des dunes du Sahara avec nuit en bivouac sous les étoiles',
+          images: [
+            '/voyages/vyg/mer/1.jpg',
+            '/voyages/vyg/mer/2.webp',
+            '/voyages/vyg/mer/222.webp'
+          ],
+          price: 1200,
+          rating: 4.8,
+          duration: '3 jours / 2 nuits',
+          tags: ['aventure', 'désert', 'randonnée'],
+          city: 'merzouga'
+        },
+        {
+          id: '2-2',
+          title: 'Safari dans le désert',
+          description: 'Excursion en 4x4 à travers les dunes et rencontre avec les nomades',
+          images: [
+            '/voyages/vyg/mer/4.jpg',
+            '/voyages/vyg/mer/5.jpg',
+            '/voyages/vyg/mer/3.webp'
+          ],
+          price: 1500,
+          rating: 4.9,
+          duration: '2 jours / 1 nuit',
+          tags: ['safari', 'désert', 'aventure'],
+          city: 'merzouga'
+        },
+        {
+          id: '2-3',
+          title: 'Nuit dans un luxueux camp de tentes',
+          description: 'Expérience haut de gamme dans le désert avec dîner et animation berbère',
+          images: [
+            '/voyages/vyg/mer/6.jpg',
+            '/voyages/vyg/mer/7.jpg',
+            '/voyages/vyg/mer/9.jpg'
+          ],
+          price: 1800,
+          rating: 5.0,
+          duration: '2 jours / 1 nuit',
+          tags: ['luxe', 'désert', 'expérience unique'],
+          city: 'merzouga'
+        }
+      ]
+    },
+    {
+      id: 'casa',
+      name: 'Casablanca',
+      image: '/assets/tourisme/casablanca.jpg',
+      description: 'La capitale économique et la plus grande ville du Maroc',
+      voyages: [
+        {
+          id: '4',
+          title: 'Casablanca Moderne',
+          description: 'Découverte de la mosquée Hassan II et de la corniche',
+          images: [
+            '/voyages/vyg/casa/1.webp',
+            '/voyages/vyg/casa/2.webp',
+            '/voyages/vyg/casa/3.jpg'
+          ],
+          price: 600,
+          rating: 4.3,
+          duration: '1 jour',
+          tags: ['moderne', 'plage', 'architecture'],
+          city: 'casa'
+        },
+        {
+          id: '4-2',
+          title: 'Art déco et histoire de Casablanca',
+          description: 'Parcours architectural à travers le centre-ville historique',
+          images: [
+            '/voyages/vyg/casa/4.webp',
+            '/voyages/vyg/casa/images.jpeg',
+            '/voyages/vyg/casa/69.jpg'
+          ],
+          price: 750,
+          rating: 4.5,
+          duration: '1 jour',
+          tags: ['architecture', 'histoire', 'culture'],
+          city: 'casa'
+        },
+        {
+          id: '4-3',
+          title: 'Vie nocturne de Casablanca',
+          description: 'Dîner gastronomique et découverte des lieux branchés de la ville',
+          images: [
+            '/voyages/vyg/casa/7.webp',
+            '/voyages/vyg/casa/T9.jpeg',
+            '/voyages/vyg/casa/tramway.jpeg'
+          ],
+          price: 900,
+          rating: 4.4,
+          duration: '1 jour',
+          tags: ['nuit', 'gastronomie', 'divertissement'],
+          city: 'casa'
+        }
+      ]
+    }
+  ]);
+
+  // Fonction pour ajouter une nouvelle ville
+  const ajouterVille = (nouvelleVille: Omit<Ville, 'id'>) => {
+    const id = nouvelleVille.name.toLowerCase().replace(/\s+/g, '-');
+    setVilles([...villes, { ...nouvelleVille, id }]);
+  };
+  
+
+  // Fonction pour ajouter un voyage à une ville
+  const ajouterVoyage = (villeId: string, nouveauVoyage: Omit<Voyage, 'id' | 'city'>) => {
+    setVilles(villes.map(ville => {
+      if (ville.id === villeId) {
+        const id = `${villeId}-${ville.voyages.length + 1}`;
+        return {
+          ...ville,
+          voyages: [...ville.voyages, { ...nouveauVoyage, id, city: villeId }]
+        };
+      }
+      return ville;
+    }));
+  };
+
+  // Filtrer les villes et voyages en fonction de la recherche
+  const filteredVilles = villes.filter(ville => 
+    ville.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    ville.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    ville.voyages.some(voyage => 
+      voyage.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      voyage.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      voyage.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+    )
+  );
+
+  // Obtenir les voyages de la ville sélectionnée ou tous les voyages
+  const voyagesAAfficher = selectedCity
+    ? villes.find(v => v.id === selectedCity)?.voyages || []
+    : filteredVilles.flatMap(ville => ville.voyages);
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 mb-10">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-8xl font-extrabold text-gray-900 mb-10">Découvrez le Maroc</h1>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Explorez nos circuits touristiques à travers les plus belles villes du Maroc
+          </p>
         </div>
 
-        {/* Résultats */}
-        {filteredVoyages.length > 0 ? (
-          <motion.div
-            variants={container}
-            initial="hidden"
-            animate="show"
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        <div className="mb-8">
+          <SearchBar 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Rechercher des destinations..."
+          />
+        </div>
+
+        {/* Filtres par ville */}
+        <div className="flex flex-wrap gap-4 mb-8 justify-center">
+          <button
+            onClick={() => setSelectedCity(null)}
+            className={`px-4 py-2 rounded-full ${!selectedCity ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-300'}`}
           >
-            {filteredVoyages.map((voyage) => (
-              <motion.div key={voyage.id} variants={item}>
-                <ServiceCard 
-                  title={voyage.title}
-                  description={`${voyage.description} (${voyage.duration})`}
-                  image={voyage.image}
-                  link={`/tourisme/${voyage.id}`}
-                  className="h-full"
-                />
-                <div className="mt-2 flex justify-between items-center px-2">
-                  <div className="flex items-center">
-                    <svg className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                    <span className="ml-1 text-sm text-gray-600">{voyage.rating}</span>
-                  </div>
-                  <span className="text-lg font-bold text-primary-600">
-                    {voyage.price.toLocaleString()} MAD
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        ) : (
-          <div className="text-center py-12">
-            <svg
-              className="mx-auto h-12 w-12 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+            Toutes les destinations
+          </button>
+          {villes.map(ville => (
+            <button
+              key={ville.id}
+              onClick={() => setSelectedCity(ville.id)}
+              className={`px-4 py-2 rounded-full ${selectedCity === ville.id ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-300'}`}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.5}
-                d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <h3 className="mt-2 text-lg font-medium text-gray-900">Aucun résultat trouvé</h3>
-            <p className="mt-1 text-gray-500">Essayez de modifier vos critères de recherche.</p>
+              {ville.name}
+            </button>
+          ))}
+        </div>
+
+        {/* Affichage des voyages */}
+        {!selectedCity ? (
+          // Affichage par ville
+          <div className="space-y-16">
+            {filteredVilles.map((ville) => (
+              <div key={ville.id} className="mb-12">
+                <div className="flex items-center mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">{ville.name}</h2>
+                  <button 
+                    onClick={() => setSelectedCity(ville.id)}
+                    className="ml-4 text-sm text-blue-600 hover:text-blue-800"
+                  >
+                    Voir tout ({ville.voyages.length})
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {ville.voyages.slice(0, 3).map((voyage) => (
+                    <div key={voyage.id}>
+                      <ImageSlider images={voyage.images} />
+                      <h3 className="text-lg font-bold text-gray-900 mt-4">{voyage.title}</h3>
+                      <p className="text-gray-600">{voyage.description}</p>
+                      <p className="text-gray-600">Prix : {voyage.price} MAD</p>
+                    </div>
+                  ))}
+                </div>
+                {ville.voyages.length > 3 && (
+                  <div className="text-center mt-6">
+                    <button 
+                      onClick={() => setSelectedCity(ville.id)}
+                      className="px-6 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition-colors"
+                    >
+                      Voir les {ville.voyages.length - 3} autres offres à {ville.name}
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          // Affichage des voyages d'une ville spécifique
+          <div>
+            <button 
+              onClick={() => setSelectedCity(null)}
+              className="flex items-center text-blue-600 mb-6 hover:text-blue-800"
+            >
+              <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Retour aux destinations
+            </button>
+            
+            <h2 className="text-3xl font-bold text-gray-900 mb-8">
+              Nos offres à {villes.find(v => v.id === selectedCity)?.name}
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {voyagesAAfficher.map((voyage) => (
+                <div key={voyage.id}>
+                  <ImageSlider images={voyage.images} />
+                  <h3 className="text-lg font-bold text-gray-900 mt-4">{voyage.title}</h3>
+                  <p className="text-gray-600">{voyage.description}</p>
+                  <p className="text-gray-600">Prix : {voyage.price} MAD</p>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>

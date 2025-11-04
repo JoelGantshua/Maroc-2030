@@ -49,10 +49,11 @@ const HotelCard = ({
 
   return (
     <motion.div 
-      className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
+      className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 cursor-pointer"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
+      onClick={() => onBook(id)}
     >
       {/* Image Carousel */}
       <div className="relative h-64 overflow-hidden">
@@ -122,12 +123,21 @@ const HotelCard = ({
             <span className="text-2xl font-bold text-blue-600">{price} DH</span>
             <span className="text-gray-500 text-sm"> / nuit</span>
           </div>
-          <button 
-            onClick={() => onBook(id)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+          <p className="text-sm text-gray-600 line-clamp-2">{description}</p>
+          <span 
+            className="mt-2 inline-flex items-center text-sm font-medium text-primary-600 group-hover:text-primary-800"
+            aria-hidden="true"
           >
-            Réserver
-          </button>
+            Découvrir plus
+            <svg 
+              className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
         </div>
       </div>
     </motion.div>

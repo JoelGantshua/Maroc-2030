@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ApartmentCard from '../../components/ApartmentCard';
 import BookingForm from '../../components/BookingForm';
+import ServiceCard from '../../components/ServiceCard';
 
 interface Apartment {
   id: string;
@@ -12,10 +14,23 @@ interface Apartment {
   images: string[];
 }
 
-const Appartements = () => {
+interface AppartementsProps {
+  onBookNow?: (apartment: Apartment) => void;
+}
+
+const Appartements: React.FC<AppartementsProps> = ({ onBookNow }) => {
   const [selectedApartment, setSelectedApartment] = useState<Apartment | null>(null);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
+
+  const handleBookNow = (apartment: Apartment) => {
+    if (onBookNow) {
+      onBookNow(apartment);
+    } else {
+      setSelectedApartment(apartment);
+      setIsBookingOpen(true);
+    }
+  };
 
   // Sample data - replace with your actual image paths from public/assets/APT/
   const apartmentsByCity: Record<string, Apartment[]> = {
@@ -338,7 +353,7 @@ const Appartements = () => {
     <div className="py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Nos Appartements</h1>
+          <h1 className="text-7xl font-bold text-gray-900 mb-4">Nos Appartements</h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Découvrez notre sélection d'appartements de qualité dans les plus belles villes du Maroc
           </p>
@@ -388,6 +403,7 @@ const Appartements = () => {
       city={apartment.city}
       images={apartment.images}
       onBook={() => handleBookClick(apartment.id)}
+
     />
   ))}
 </div>

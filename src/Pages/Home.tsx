@@ -4,6 +4,7 @@ import { FiArrowRight, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import Hero from "../components/Hero";
 import Apropos from "./Apropos";
 import Contact from "./Contact";
+import { Outlet } from 'react-router-dom';
 
 interface Service {
   title: string;
@@ -137,7 +138,7 @@ const Home = () => {
                         <p className="text-xl mb-6 max-w-2xl">{activeServiceData.description}</p>
                         <a 
                           href={activeServiceData.link}
-                          className="inline-flex items-center bg-white text-primary px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-all duration-300 transform hover:scale-105"
+                          className="inline-flex items-center bg-green-500 text-white px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-all duration-300 transform hover:scale-105"
                         >
                           Découvrir <FiArrowRight className="ml-2" />
                         </a>
@@ -165,13 +166,13 @@ const Home = () => {
             </button>
 
             {/* Indicators */}
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-2 ">
               {services.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setActiveService(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === activeService ? 'bg-white w-8' : 'bg-white/50 hover:bg-white/80'
+                  className={`w-3 h-3 rounded-full transition-all duration-30 ${
+                    index === activeService ? 'bg-green-500 w-8' : 'bg-white/50 hover:bg-white/80'
                   }`}
                   aria-label={`Aller au service ${index + 1}`}
                 />
@@ -223,7 +224,7 @@ const Home = () => {
             <h2 className="text-4xl font-bold text-gray-900 mb-4">Événements à Venir</h2>
             <div className="w-20 h-1 bg-primary mx-auto mb-6"></div>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Découvrez les événements incontournables qui vous attendent à Meknès
+              Découvrez les événements incontournables qui vous attendent au Maroc
             </p>
           </div>
 
@@ -336,10 +337,10 @@ const Home = () => {
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r bg-black/30 to-indigo-700 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-6">Prêt à vivre l'aventure à Meknès ?</h2>
+        <div className="container mx-auto px-3 text-center">
+          <h2 className="text-4xl font-bold mb-6">Prêt à vivre l'aventure au Maroc ?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Notre équipe est à votre disposition pour créer le voyage de vos rêves à Meknès
+            Notre équipe est à votre disposition pour créer le voyage de vos rêves au Maroc
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a 
@@ -357,13 +358,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-r bg-black/30 to-indigo-700 text-white">
-        <div className="container mx-auto px-4 text-center">
-         
-        </div>
-      </section>
+      <Outlet />
+      
     </div>
   );
 };

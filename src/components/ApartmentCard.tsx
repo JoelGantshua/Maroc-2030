@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+
 
 interface ApartmentCardProps {
   id: string;
@@ -23,6 +25,7 @@ const ApartmentCard = ({
   images = [],
   onBook
 }: ApartmentCardProps) => {
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const nextImage = () => {
@@ -33,6 +36,11 @@ const ApartmentCard = ({
     setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
+  const handleBookNow = (e: React.MouseEvent) => {
+    e.preventDefault();
+    onBook(id); // Appelle la fonction parent (Appartements.tsx)
+  };
+  
   return (
     <motion.div 
       className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
@@ -113,12 +121,16 @@ const ApartmentCard = ({
         
         <p className="text-gray-600 mt-3 line-clamp-2">{description}</p>
         
-        <button
-          onClick={() => onBook(id)}
-          className="mt-4 w-full bg-primary hover:bg-primary/90 text-white font-medium py-2 px-4 rounded-lg transition-colors"
-        >
-          Réserver maintenant
-        </button>
+        <div className="mt-4 flex justify-between items-center">
+        
+          <button 
+            onClick={handleBookNow}
+            className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-blue-600 text-sm font-medium rounded-lg transition-colors duration-200"
+          >
+            Réserver
+          </button>
+
+        </div>
       </div>
     </motion.div>
   );

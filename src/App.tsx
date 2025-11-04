@@ -1,10 +1,10 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import LoadingSpinner from "./components/LoadingSpinner";
-
+import BookingForm from "./components/BookingForm"; 
 // ✅ Lazy loading des pages principales
 const Home = lazy(() => import("./Pages/Home"));
 const Services = lazy(() => import("./Pages/Services"));
@@ -31,18 +31,28 @@ const LoadingFallback = () => (
 );
 
 function App() {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [selectedApartment, setSelectedApartment] = useState(null);
+
+  // Function to open booking form with apartment data
+  const handleOpenBooking = (apartment: any) => {
+    setSelectedApartment(apartment);
+    setIsBookingOpen(true);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar />
       <Suspense fallback={<LoadingFallback />}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/services" element={<Services />}>
+          <Route path="services">
+            <Route index element={<Services />} />
             <Route path="appartements" element={<Appartements />} />
             <Route path="tourisme" element={<Tourisme />} />
             <Route path="voitures" element={<Voitures />} />
             <Route path="villas" element={<Villas />} />
-            <Route path="hotels" element={<Hotels />} />
+            <Route path="hotels" element={<Hotels onBookNow={handleOpenBooking} />} />
           </Route>
           <Route path="/evenements" element={<Evenements />} />
           <Route path="/imam" element={<Imam />} />
@@ -53,6 +63,14 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
+      
+      {/* Booking Form Modal */}
+      <BookingForm 
+        isOpen={isBookingOpen} 
+        onClose={() => setIsBookingOpen(false)}
+        apartment={selectedApartment}
+      />
+      
       <Footer />
       <Toaster
         position="top-center"
